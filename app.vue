@@ -20,18 +20,27 @@ const { data: globalsData } = await useAsyncData('globals', async () => {
 </script>
 
 <template>
-  <div>
+  <div class="page">
     <Header />
 
     <!-- <Alert /> -->
 
-    <main class="page min-h-screen" id="main" tabindex="-1">
+    <main id="main" tabindex="-1">
       <NuxtPage />
     </main>
 
-    <!-- <Footer :globalData="globalsData?.global" /> -->
-    <footer>
-      <p style="color: blue;">Footer</p>
-    </footer>
+    <Footer />
   </div>
 </template>
+
+<style scoped>
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+</style>
