@@ -11,8 +11,24 @@ export default defineNuxtConfig({
     enabled: true
   },
   css: [
+    '@/styles/variables.css',
+    '@/styles/utilities.css',
     '@/styles/globals.css'
   ],
+  nitro: {
+    devServer: {
+      watch: ['./server']
+    }
+  },
+  hooks: {
+    'nitro:config': async (nitroConfig) => {
+      // Get routes from our SSG module
+      const routes = await ssgRoutes()
+      
+      // Add routes to prerender
+      nitroConfig.prerender.routes = routes
+    }
+  },
   app: {
     head: {
       titleTemplate: '%s | ' + process.env.SITE_NAME,
@@ -58,14 +74,6 @@ export default defineNuxtConfig({
       hmr: {
         port: 3000
       }
-    }
-  },
-  nitro: {
-    devServer: {
-      watch: ['./server']
-    },
-    prerender: {
-      routes: ssgRoutes()
     }
   },
   experimental: {
