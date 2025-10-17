@@ -29,10 +29,29 @@ export default defineNuxtConfig({
       SITE_NAME: process.env.SITE_NAME
     }
   },
+  css: [
+    '@/styles/variables.css',
+    '@/styles/utilities.css',
+    '@/styles/globals.css'
+  ],
+  postcss: {
+    plugins: {
+      'postcss-import': {},
+      'postcss-nested': {},
+      'postcss-custom-properties': {
+        preserve: false
+      },
+      'postcss-preset-env': {
+        stage: 1,
+        features: {
+          'custom-properties': false,
+          'nesting-rules': false
+        }
+      },
+      autoprefixer: {}
+    }
+  },
   vite: {
-    plugins: [
-      // tailwindcss()
-    ],
     server: {
       hmr: {
         port: 3000

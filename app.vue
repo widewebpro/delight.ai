@@ -21,13 +21,7 @@ const { data: globalsData } = await useAsyncData('globals', async () => {
 
 <template>
   <div>
-    <!-- <Header
-      :globalData="globalsData?.global"
-      :pages="globalsData?.pages"
-    /> -->
-    <header>
-      <p style="color: red;">Header</p>
-    </header>
+    <Header />
 
     <!-- <Alert /> -->
 
