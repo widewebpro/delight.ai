@@ -1,30 +1,4 @@
 export const PAGE_QUERY = `
-  query PageEntry($uri: [String]!, $site: [String]) {
-    entry(site: $site, uri: $uri) {
-      id
-      title
-      uri
-      pageSubheading
-      pageContent
-      image {
-        url @transform(handle: "hero")
-        alt
-      }
-      ancestors {
-        id
-        title
-        uri
-      }
-      children {
-        id
-        title
-        uri
-      }
-    }
-  }
-`
-
-export const getTower = `
 query getTower(
   $site: [String]
   $uri: [String]) {

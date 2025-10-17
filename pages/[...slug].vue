@@ -30,14 +30,20 @@ const slug = computed(() => {
 // Skip fetching for system paths (e.g., .well-known)
 const shouldFetch = computed(() => !!slug.value && !slug.value.startsWith('.well-known'))
 
+// Default fallback data for static generation
+const defaultPageData = {
+  title: 'Page Not Found',
+  id: 'not-found',
+  content: '<p>This page could not be found.</p>'
+}
+
 // Fetch the page data
 const { data: pageData, refresh, error } = await useAsyncData(
   `page-${slug.value}`,
   () => {
     if (!shouldFetch.value) {
-      return Promise.resolve(null)
+      return Promise.resolve(defaultPageData)
     }
-    console.log('slug.value', slug.value)
 
     return graphql.query(PAGE_QUERY, {
       uri: [slug.value],
@@ -46,16 +52,17 @@ const { data: pageData, refresh, error } = await useAsyncData(
       previewToken: previewToken.value
     }).then(result => {
       if (!result?.entry) {
-        return null
+        return defaultPageData
       }
       return result.entry
     }).catch(err => {
       console.error('Error fetching page:', err)
-      return null
+      return defaultPageData
     })
   },
   {
-    watch: [slug, previewToken, shouldFetch] // Watch both slug and preview token
+    watch: [slug, previewToken, shouldFetch],
+    default: () => defaultPageData
   }
 )
 
@@ -67,7 +74,7 @@ watch([isPreview, previewToken], () => {
 
 // Set the page title
 useHead(() => ({
-  title: pageData.value?.title || ''
+  title: pageData.value?.title || 'Page Not Found'
 }))
 </script>
 

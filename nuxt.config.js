@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import ssgRoutes from './modules/ssg-international-routes'
+
 export default defineNuxtConfig({
   typescript: {
     strict: true,
@@ -61,6 +63,9 @@ export default defineNuxtConfig({
   nitro: {
     devServer: {
       watch: ['./server']
+    },
+    prerender: {
+      routes: ssgRoutes()
     }
   },
   experimental: {
